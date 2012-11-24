@@ -1,10 +1,14 @@
 CFLAGS=-O2 -g -Wall 
-#-I/lib/modules/`uname -r`/include/build
+RANLIB=ranlib
 
-all: test
+all: test libeasyperf.a
+
+libeasyperf.a: easyperf.o
+	$(AR) rc $@ $^
+	$(RANLIB) $@
 
 test: easyperf.o test.o
 	$(CC) -o $@ $^ -lm
 
 clean:
-	rm -f *.o test
+	rm -f *.o test libeasyperf.a
